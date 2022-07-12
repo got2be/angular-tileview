@@ -187,7 +187,7 @@
                         var scrollPosition = scope.options.alignHorizontal ?
                             container.scrollLeft() :
                             container[0].scrollTop;
-                        var scrollEndThreshold = maxScrollPosition - scope.options.scrollEndOffset * itemSize;
+                        var scrollEndThreshold = Math.floor(maxScrollPosition - scope.options.scrollEndOffset * itemSize);
                         if (scrollPosition >= scrollEndThreshold && !(lastScrollPosition >= scrollEndThreshold) && scope.options.onScrollEnd !== undefined) {
                             scope.options.onScrollEnd();
                         }

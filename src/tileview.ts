@@ -15,14 +15,14 @@ declare const angular: any;
 	 *
 	 * The tile directive provides a tile-based view on a list of data. The tiles can be arranged in a grid or they can be
 	 * horizontally stacked.
-   * 
-   * The tile directive will automatically resize when the window is resized. If the size changed for some other reasons, a manual resize 
-   * can be triggered, by broadcasting the `td.tileview.resize` event. There are two other events, that indicate the beginning and ending 
+   *
+   * The tile directive will automatically resize when the window is resized. If the size changed for some other reasons, a manual resize
+   * can be triggered, by broadcasting the `td.tileview.resize` event. There are two other events, that indicate the beginning and ending
    * of a scrolling movement. These events can be used to implement custom performance optimisations, because not every DOM change needs to
-   * be done while scrolling. The events are: `td.tileview.scrollStart` and `td.tileview.scrollEnd`. In order to detect when scrolling ends 
+   * be done while scrolling. The events are: `td.tileview.scrollStart` and `td.tileview.scrollEnd`. In order to detect when scrolling ends
    * a debounce delay is used. It can be configured with the `afterScrollDelay` options property.
 	 *
-	 * @param {Array=} items The items that are to be displayed in the tile view 
+	 * @param {Array=} items The items that are to be displayed in the tile view
 	 * @param {object=} options An options object defining options that are relevant specifically for the tile ui such as
 	 * tile sizes for example. It consists of the following properties:
 	 *
@@ -36,7 +36,7 @@ declare const angular: any;
 	 * - **alignHorizontal** - {boolean} - Whether to show the tiles in a grid with a vertical scrollbar or horizontally
 	 * stacked.
    * - **onScrollEnd** - {function} - A callback that is invoked when the user scrolls to the end of the data.
-   * - **scrollEndOffset** - {number} - Some features that rely on the `scrollEnd` callback need to be informed in advance. 
+   * - **scrollEndOffset** - {number} - Some features that rely on the `scrollEnd` callback need to be informed in advance.
    * This property specifies an offset in rows to trigger the scroll end event before actually hitting the bottom of the data. **Default**: 0
    * - **overflow** - {number} - Number of rows that are rendered additionally to the visible rows to make the scrolling experience more fluent. **Default**: 2
    * - **debounce** - {number} - Debounce for the scroll event. A value of `0` is interpreted as no debounce. **Default**: 0.
@@ -215,11 +215,11 @@ declare const angular: any;
 
           const maxScrollPosition = rowCount * itemSize - rect[sizeDimension];
 
-          let scrollPosition = scope.options.alignHorizontal ? 
+          let scrollPosition = scope.options.alignHorizontal ?
             container.scrollLeft() :
             container[0].scrollTop;
 
-          const scrollEndThreshold = maxScrollPosition - scope.options.scrollEndOffset * itemSize;
+          const scrollEndThreshold = Math.floor(maxScrollPosition - scope.options.scrollEndOffset * itemSize);
           if (scrollPosition >= scrollEndThreshold && !(lastScrollPosition >= scrollEndThreshold) && scope.options.onScrollEnd !== undefined) {
             scope.options.onScrollEnd();
           }
