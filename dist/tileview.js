@@ -64,6 +64,12 @@
                     var virtualRows = [];
                     var scopes = {};
                     var scopeCounter = 0;
+                    function getBoundingClientRect(el) {
+                        return {
+                            width: el[0].clientWidth,
+                            height: el[0].clientHeight,
+                        }
+                    }
                     function nextScopeId() {
                         scopeCounter = scopeCounter + 1;
                         return 'scope-' + scopeCounter;
@@ -181,7 +187,7 @@
                         function clamp(value, min, max) {
                             return Math.max(Math.min(value, max), min);
                         }
-                        var rect = container[0].getBoundingClientRect();
+                        var rect = getBoundingClientRect(container);
                         var itemSize = scope.options.tileSize[sizeDimension];
                         var maxScrollPosition = rowCount * itemSize - rect[sizeDimension];
                         var scrollPosition = scope.options.alignHorizontal ?
@@ -300,7 +306,7 @@
                         renderedEndRow = endRow;
                     }
                     function resize() {
-                        var newComponentSize = container[0].getBoundingClientRect();
+                        var newComponentSize = getBoundingClientRect(container);
                         if (newComponentSize.width !== componentWidth || newComponentSize.height !== componentHeight) {
                             if (layout(false)) {
                                 forEachElement(function (el) { return scopes[el.attr('id')].$digest(); });
@@ -311,7 +317,7 @@
                         resize();
                     }
                     function measure() {
-                        var rect = container[0].getBoundingClientRect();
+                        var rect = getBoundingClientRect(container);
                         componentWidth = rect.width;
                         componentHeight = rect.height;
                         var itemWidth = scope.options.tileSize.width;
