@@ -64,14 +64,12 @@
                     var virtualRows = [];
                     var scopes = {};
                     var scopeCounter = 0;
-                    function getBoundingClientRect(el) {
-                        const element = el[0];
-                        const rect = element.getBoundingClientRect();
-                        const verticalScrollbarWidth = element.offsetWidth - element.clientWidth;
-                        const widthExcludingScrollbar = rect.width - verticalScrollbarWidth;
+                    function getContainerRect() {
+                        const rect1 = container[0].getBoundingClientRect();
+                        const rect2 = itemContainer[0].getBoundingClientRect();
                         return {
-                            width: widthExcludingScrollbar,
-                            height: rect.height
+                            width: rect2.width,
+                            height: rect1.height
                         }
                     }
                     function nextScopeId() {
@@ -191,7 +189,7 @@
                         function clamp(value, min, max) {
                             return Math.max(Math.min(value, max), min);
                         }
-                        var rect = getBoundingClientRect(container);
+                        var rect = getContainerRect();
                         var itemSize = scope.options.tileSize[sizeDimension];
                         var maxScrollPosition = rowCount * itemSize - rect[sizeDimension];
                         var scrollPosition = scope.options.alignHorizontal ?
@@ -310,7 +308,7 @@
                         renderedEndRow = endRow;
                     }
                     function resize() {
-                        var newComponentSize = getBoundingClientRect(container);
+                        var newComponentSize = getContainerRect();
                         if (newComponentSize.width !== componentWidth || newComponentSize.height !== componentHeight) {
                             if (layout(false)) {
                                 forEachElement(function (el) { return scopes[el.attr('id')].$digest(); });
@@ -321,7 +319,7 @@
                         resize();
                     }
                     function measure() {
-                        var rect = getBoundingClientRect(container);
+                        var rect = getContainerRect();
                         componentWidth = rect.width;
                         componentHeight = rect.height;
                         var itemWidth = scope.options.tileSize.width;
