@@ -76,7 +76,8 @@ declare const angular: any;
         const scopes = {};
         let scopeCounter = 0;
 
-        function getBoundingClientRect(element) {
+        function getBoundingClientRect(el) {
+          const element = el[0];
           const rect = element.getBoundingClientRect();
           const verticalScrollbarWidth = element.offsetWidth - element.clientWidth;
           const widthExcludingScrollbar = rect.width - verticalScrollbarWidth;
